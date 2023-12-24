@@ -5,9 +5,12 @@ plugins {
 dependencies {
     compileOnly(project(":NookureChat-API"))
     compileOnly(libs.paperApi)
+    compileOnly(libs.bundles.adventure)
+    compileOnly(libs.vault)
 }
 
 bukkit {
+    name = "NookureChat"
     main = "com.nookure.chat.paper.bootstrap.ChatBootstrapper"
     apiVersion = "1.13"
     version = rootProject.version.toString()
