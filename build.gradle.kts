@@ -13,9 +13,7 @@ dependencies {
   // Implements libraries
   implementation(libs.guice)
   implementation(libs.configurateYaml)
-  implementation(libs.adventureApi)
-  implementation(libs.adventureLegacy)
-  implementation(libs.adventureBukkit)
+  implementation(libs.bundles.adventure)
 }
 
 allprojects {
@@ -34,7 +32,14 @@ allprojects {
     options.encoding = "UTF-8"
   }
 
+  java {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(17))
+    }
+  }
+
   dependencies {
     compileOnly(rootProject.libs.guice)
+    compileOnly(rootProject.libs.adventureApi)
   }
 }
