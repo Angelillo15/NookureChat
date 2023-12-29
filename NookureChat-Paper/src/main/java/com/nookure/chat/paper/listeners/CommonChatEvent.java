@@ -11,6 +11,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -24,7 +25,7 @@ public abstract class CommonChatEvent {
   @Inject
   private Logger logger;
 
-  public boolean check(Player player, String message) {
+  public boolean check(@NotNull Player player, @NotNull String message) {
     for (var filter : filterManager.getFilters().values()) {
       if (!player.hasPermission(filter.getFilterData().permission()) && !filter.check(player, message)) {
         return false;
@@ -34,7 +35,7 @@ public abstract class CommonChatEvent {
     return true;
   }
 
-  public Component format(Player player, String message) {
+  public Component format(@NotNull Player player, @NotNull String message) {
     String group = permissionAdapter.getHighestGroup(player);
 
     AtomicReference<String> prefix = new AtomicReference<>(formatConfig.get().getDefaultPrefix());
