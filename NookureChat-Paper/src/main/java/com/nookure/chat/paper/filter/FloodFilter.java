@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.nookure.chat.api.chat.ChatFilter;
 import com.nookure.chat.api.chat.ChatFilterData;
 import com.nookure.chat.api.config.Config;
+import com.nookure.chat.api.config.ConfigurationContainer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,14 +19,14 @@ import static com.nookure.chat.paper.utils.MessageUtils.sendMessage;
 )
 public class FloodFilter extends ChatFilter {
   @Inject
-  private Config config;
+  private ConfigurationContainer<Config> config;
 
   @Override
   public boolean check(@NotNull Player player, @NotNull String message) {
-    Pattern matcher = Pattern.compile("(.)\\1{" + config.filters.flood.getMaxRepetitions() + ",}");
+    Pattern matcher = Pattern.compile("(.)\\1{" + config.get().filters.flood.getMaxRepetitions() + ",}");
 
     if (matcher.matcher(message).find()) {
-      sendMessage(player, config.filters.flood.getDenyMessage());
+      sendMessage(player, config.get().filters.flood.getDenyMessage());
       return false;
     }
 
