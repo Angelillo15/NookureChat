@@ -69,7 +69,9 @@ public class PluginModule extends AbstractModule {
   }
 
   private ConfigurationContainer<Config> loadConfig() throws IOException {
-    return ConfigurationContainer.load(plugin.getDataFolder().toPath(), Config.class);
+    ConfigurationContainer<Config> config = ConfigurationContainer.load(plugin.getDataFolder().toPath(), Config.class);
+    plugin.setDebug(config.get().isDebug());
+    return config;
   }
 
   private ConfigurationContainer<FormatConfig> loadFormatConfig() throws IOException {
