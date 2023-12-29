@@ -29,6 +29,7 @@ public class ConfigurationContainer<C> {
     this.clazz = clazz;
     this.fileName = fileName;
   }
+
   public C get() {
     return this.config.get();
   }
