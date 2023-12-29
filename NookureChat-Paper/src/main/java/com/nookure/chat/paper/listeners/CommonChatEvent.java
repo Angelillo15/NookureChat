@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.TextUtils;
 import com.nookure.chat.api.adapters.PermissionAdapter;
+import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
 import com.nookure.chat.api.managers.FilterManager;
 import net.kyori.adventure.text.Component;
@@ -17,7 +18,7 @@ public abstract class CommonChatEvent {
   @Inject
   private FilterManager filterManager;
   @Inject
-  private FormatConfig formatConfig;
+  private ConfigurationContainer<FormatConfig> formatConfig;
   @Inject
   private PermissionAdapter permissionAdapter;
   @Inject
@@ -25,7 +26,7 @@ public abstract class CommonChatEvent {
 
   public boolean check(Player player, String message) {
     for (var filter : filterManager.getFilters().values()) {
-      if (!filter.check(player, message)) {
+      if (!player.hasPermission(filter.getFilterData().permission()) && !filter.check(player, message)) {
         return false;
       }
     }
@@ -36,14 +37,14 @@ public abstract class CommonChatEvent {
   public Component format(Player player, String message) {
     String group = permissionAdapter.getHighestGroup(player);
 
-    AtomicReference<String> prefix = new AtomicReference<>(formatConfig.getDefaultPrefix());
-    AtomicReference<String> suffix = new AtomicReference<>(formatConfig.getDefaultSuffix());
-    AtomicReference<String> format = new AtomicReference<>(formatConfig.getDefaultFormat());
+    AtomicReference<String> prefix = new AtomicReference<>(formatConfig.get().getDefaultPrefix());
+    AtomicReference<String> suffix = new AtomicReference<>(formatConfig.get().getDefaultSuffix());
+    AtomicReference<String> format = new AtomicReference<>(formatConfig.get().getDefaultFormat());
 
     logger.debug("User %s with group %s sent a message: %s", player.getName(), group, message);
 
-    if (formatConfig.getGroups().containsKey(group)) {
-      FormatConfig.Group groupConfig = formatConfig.getGroups().get(group);
+    if (formatConfig.get().getGroups().containsKey(group)) {
+      FormatConfig.Group groupConfig = formatConfig.get().getGroups().get(group);
 
       prefix.set(groupConfig.getPrefix());
       suffix.set(groupConfig.getSuffix());
