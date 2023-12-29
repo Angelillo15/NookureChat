@@ -3,7 +3,7 @@ package com.nookure.chat.api.managers;
 import com.google.inject.Singleton;
 import com.nookure.chat.api.chat.ChatFilter;
 import com.nookure.chat.api.chat.ChatFilterData;
-import com.nookure.chat.api.config.partials.FilterConfig;
+import com.nookure.chat.api.config.partials.filters.FilterConfig;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

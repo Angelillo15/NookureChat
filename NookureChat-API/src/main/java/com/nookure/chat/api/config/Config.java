@@ -1,9 +1,9 @@
 package com.nookure.chat.api.config;
 
-import com.nookure.chat.api.config.partials.BannedWordsConfig;
-import com.nookure.chat.api.config.partials.FloodConfig;
-import com.nookure.chat.api.config.partials.MessageSpamConfig;
-import com.nookure.chat.api.config.partials.SpamConfig;
+import com.nookure.chat.api.config.partials.filters.BannedWordsConfig;
+import com.nookure.chat.api.config.partials.filters.FloodConfig;
+import com.nookure.chat.api.config.partials.filters.MessageSpamConfig;
+import com.nookure.chat.api.config.partials.filters.SpamConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
