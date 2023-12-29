@@ -14,6 +14,7 @@ import com.nookure.chat.paper.filter.FloodFilter;
 import com.nookure.chat.paper.filter.MessageSpamFilter;
 import com.nookure.chat.paper.filter.SpamFilter;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
+import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.HandlerList;
@@ -64,6 +65,10 @@ public class NookureChat {
     logger.debug("Loading listeners...");
     if (VERSION >= 17) {
       registerListener(PaperChatDecorateEvent.class);
+    }
+
+    if (formatConfig.get().isEnableJoinQuitMessages()) {
+      if (VERSION >= 17) registerListener(PlayerJoinLeaveEvent.class);
     }
   }
 
