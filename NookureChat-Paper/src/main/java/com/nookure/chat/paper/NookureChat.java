@@ -4,10 +4,14 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.config.Config;
+import com.nookure.chat.api.config.ConfigurationContainer;
+import com.nookure.chat.api.config.FormatConfig;
 import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
+import com.nookure.chat.paper.filter.BannedWordsFilter;
 import com.nookure.chat.paper.filter.FloodFilter;
+import com.nookure.chat.paper.filter.MessageSpamFilter;
 import com.nookure.chat.paper.filter.SpamFilter;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import org.bukkit.Bukkit;
@@ -27,7 +31,9 @@ public class NookureChat {
   @Inject
   private Injector injector;
   @Inject
-  private Config config;
+  private ConfigurationContainer<Config> config;
+  @Inject
+  private ConfigurationContainer<FormatConfig> formatConfig;
   @Inject
   private CommandMap commandMap;
   @Inject
@@ -50,7 +56,7 @@ public class NookureChat {
     });
 
     listeners.clear();
-
+    reloadConfig();
     loadListeners();
   }
 
@@ -61,14 +67,21 @@ public class NookureChat {
     }
   }
 
+  public void reloadConfig() {
+    config.reload().join();
+    formatConfig.reload().join();
+  }
+
   public void loadCommands() {
     logger.debug("Loading commands...");
     commandMap.register("nchat", injector.getInstance(NookureChatCMD.class));
   }
 
   public void registerFilters() {
-    filterManager.registerFilter(injector.getInstance(FloodFilter.class), config.filters.flood);
-    filterManager.registerFilter(injector.getInstance(SpamFilter.class), config.filters.spam);
+    filterManager.registerFilter(injector.getInstance(FloodFilter.class), config.get().filters.flood);
+    filterManager.registerFilter(injector.getInstance(SpamFilter.class), config.get().filters.spam);
+    filterManager.registerFilter(injector.getInstance(MessageSpamFilter.class), config.get().filters.messageSpam);
+    filterManager.registerFilter(injector.getInstance(BannedWordsFilter.class), config.get().filters.bannedWords);
   }
 
   public void registerListener(Class<? extends Listener> listener) {

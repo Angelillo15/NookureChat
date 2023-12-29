@@ -2,6 +2,7 @@ package com.nookure.chat.paper.bootstrap;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.nookure.chat.Constants;
 import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.NookureChatPlatform;
@@ -19,7 +20,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class ChatBootstrapper extends JavaPlugin implements NookureChatPlatform<JavaPlugin> {
@@ -55,43 +55,25 @@ public class ChatBootstrapper extends JavaPlugin implements NookureChatPlatform<
     );
     audiences.console().sendMessage(Component.text(
         "NookureChat v" + Constants.VERSION + " by Angelillo15").color(NamedTextColor.RED));
-    // Load configs
-    loadConfig();
     // Load Google Guice injector
     loadInjector();
+    // Load configs
+    loadConfig();
     // Inject the main class of the plugin
     injectPlugin();
-    // Load the plugin config
-    loadConfig();
     // Do the plugin enable
     plugin.onEnable();
     logger.info("Plugin enabled!");
   }
 
   public void loadConfig() {
-    try {
-      config = ConfigurationContainer.load(getDataFolder().toPath(), Config.class);
-      formatConfig = ConfigurationContainer.load(getDataFolder().toPath(), FormatConfig.class, "format.yml");
-
-      configMapper.register(Config.class, config);
-      configMapper.register(FormatConfig.class, formatConfig);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    setDebug(config.get().isDebug());
+    config = injector.getInstance(new Key<>() {
+    });
   }
 
   @Override
   public void reload() {
-    reloadConfig();
     plugin.onReload();
-  }
-
-  public void reloadConfig() {
-    config.reload().join();
-    formatConfig.reload().join();
-    setDebug(config.get().isDebug());
   }
 
   @Override
@@ -160,11 +142,13 @@ public class ChatBootstrapper extends JavaPlugin implements NookureChatPlatform<
   }
 
   public ConfigurationContainer<Config> getPluginConfig() {
-    return config;
+    return injector.getInstance(new Key<>() {
+    });
   }
 
   public ConfigurationContainer<FormatConfig> getFormatConfig() {
-    return formatConfig;
+    return injector.getInstance(new Key<>() {
+    });
   }
 
   public static ChatBootstrapper getPlugin() {
