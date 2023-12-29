@@ -2,12 +2,16 @@ package com.nookure.chat.paper;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.config.Config;
 import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
+import com.nookure.chat.paper.cmd.NookureChatCMD;
 import com.nookure.chat.paper.filter.FloodFilter;
+import com.nookure.chat.paper.filter.SpamFilter;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
@@ -24,10 +28,15 @@ public class NookureChat {
   private Injector injector;
   @Inject
   private Config config;
+  @Inject
+  private CommandMap commandMap;
+  @Inject
+  private Logger logger;
 
   public void onEnable() {
     loadListeners();
     registerFilters();
+    loadCommands();
   }
 
   public void onDisable() {
@@ -41,16 +50,25 @@ public class NookureChat {
     });
 
     listeners.clear();
+
+    loadListeners();
   }
 
   public void loadListeners() {
+    logger.debug("Loading listeners...");
     if (VERSION >= 17) {
       registerListener(PaperChatDecorateEvent.class);
     }
   }
 
+  public void loadCommands() {
+    logger.debug("Loading commands...");
+    commandMap.register("nchat", injector.getInstance(NookureChatCMD.class));
+  }
+
   public void registerFilters() {
-    filterManager.registerFilter(injector.getInstance(FloodFilter.class), config.flood);
+    filterManager.registerFilter(injector.getInstance(FloodFilter.class), config.filters.flood);
+    filterManager.registerFilter(injector.getInstance(SpamFilter.class), config.filters.spam);
   }
 
   public void registerListener(Class<? extends Listener> listener) {

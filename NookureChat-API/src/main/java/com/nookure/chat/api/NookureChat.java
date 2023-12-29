@@ -12,6 +12,8 @@ public interface NookureChat {
 
   void setDebug(boolean debug);
 
+  void reload();
+
   File getPluginDataFolder();
 
   InputStream getPluginResource(String s);

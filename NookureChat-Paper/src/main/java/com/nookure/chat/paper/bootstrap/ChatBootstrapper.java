@@ -78,6 +78,20 @@ public class ChatBootstrapper extends JavaPlugin implements NookureChatPlatform<
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+
+    setDebug(config.get().isDebug());
+  }
+
+  @Override
+  public void reload() {
+    reloadConfig();
+    plugin.onReload();
+  }
+
+  public void reloadConfig() {
+    config.reload().join();
+    formatConfig.reload().join();
+    setDebug(config.get().isDebug());
   }
 
   @Override
