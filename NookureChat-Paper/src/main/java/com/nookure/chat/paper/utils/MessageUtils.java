@@ -2,9 +2,11 @@ package com.nookure.chat.paper.utils;
 
 import com.nookure.chat.paper.NookureChat;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageUtils {
@@ -32,13 +34,12 @@ public class MessageUtils {
     return MiniMessage.miniMessage().deserialize(message);
   }
 
-  public static void sendMessage(Player player, String message) {
+  public static void sendMessage(CommandSender sender, String message) {
     if (NookureChat.VERSION >= 17) {
-      player.sendMessage(cmp(message));
+      sender.sendMessage(cmp(message));
     } else {
-      ChatBootstrapper.getPlugin().getAudiences()
-          .player(player.getUniqueId())
-          .sendMessage(cmp(message));
+      BukkitAudiences se = (BukkitAudiences) ChatBootstrapper.getPlugin().getAudiences();
+      se.sender(sender).sendMessage(cmp(message));
     }
   }
 }
