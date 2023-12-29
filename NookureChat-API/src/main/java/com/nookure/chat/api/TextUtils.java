@@ -7,17 +7,24 @@ public class TextUtils {
   private static final boolean isPlaceholderAPI;
 
   static {
+    boolean isPlaceholderAPITemp;
     try {
       Class.forName("me.clip.placeholderapi.PlaceholderAPI");
-      isPlaceholderAPI = true;
+      isPlaceholderAPITemp = true;
     } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
+      isPlaceholderAPITemp = false;
     }
+
+    isPlaceholderAPI = isPlaceholderAPITemp;
   }
 
   public static String processPlaceholders(Player player, String message) {
-    if (isPlaceholderAPI) {
-      return PlaceholderAPI.setPlaceholders(player, message);
+    try {
+      if (isPlaceholderAPI) {
+        return PlaceholderAPI.setPlaceholders(player, message);
+      }
+    } catch (Exception e) {
+      return message;
     }
 
     return message;
