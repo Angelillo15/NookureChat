@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public interface Logger {
   /**
    * Log a message to the console
+   *
    * @param message The message to log
    */
   default void info(String message) {
@@ -14,6 +15,7 @@ public interface Logger {
 
   /**
    * Log a warning to the console
+   *
    * @param message The message to log
    */
   default void warning(String message) {
@@ -22,6 +24,7 @@ public interface Logger {
 
   /**
    * Log a severe error to the console
+   *
    * @param message The message to log
    */
   default void severe(String message) {
@@ -30,14 +33,32 @@ public interface Logger {
 
   /**
    * Log a debug message to the console
+   *
    * @param message The message to log
    */
   default void debug(String message) {
     debug(Component.text(message).color(NamedTextColor.GRAY));
   }
 
+  default void info(String message, Object... args) {
+    info(String.format(message, args));
+  }
+
+  default void warning(String message, Object... args) {
+    warning(String.format(message, args));
+  }
+
+  default void severe(String message, Object... args) {
+    severe(String.format(message, args));
+  }
+
+  default void debug(String message, Object... args) {
+    debug(String.format(message, args));
+  }
+
   /**
    * Log a message to the console
+   *
    * @param component The component to log
    * @see net.kyori.adventure.text.Component
    */
@@ -45,6 +66,7 @@ public interface Logger {
 
   /**
    * Log a warning to the console
+   *
    * @param component The component to log
    * @see net.kyori.adventure.text.Component
    */
@@ -52,6 +74,7 @@ public interface Logger {
 
   /**
    * Log a severe error to the console
+   *
    * @param component The component to log
    * @see net.kyori.adventure.text.Component
    */
@@ -59,6 +82,7 @@ public interface Logger {
 
   /**
    * Log a debug message to the console
+   *
    * @param component The component to log
    * @see net.kyori.adventure.text.Component
    */
