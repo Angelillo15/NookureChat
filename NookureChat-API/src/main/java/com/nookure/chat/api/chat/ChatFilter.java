@@ -15,9 +15,19 @@ public abstract class ChatFilter {
    * if the message is not valid, return false,
    * and the message will not be sent to the
    * other players.
-   * @param player The player who sent the message
+   *
+   * @param player  The player who sent the message
    * @param message The message to check
    * @return true if the message is valid, false if the message is invalid
    */
   abstract public boolean check(@NotNull Player player, @NotNull String message);
+
+  /**
+   * Get the name of the filter
+   *
+   * @return The name of the filter
+   */
+  public ChatFilterData getFilterData() {
+    return this.getClass().getAnnotation(ChatFilterData.class);
+  }
 }
