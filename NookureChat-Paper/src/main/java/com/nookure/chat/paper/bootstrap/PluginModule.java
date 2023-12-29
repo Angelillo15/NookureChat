@@ -13,6 +13,7 @@ import com.nookure.chat.api.managers.FilterManager;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +39,7 @@ public class PluginModule extends AbstractModule {
     bind(FilterManager.class).asEagerSingleton();
     bind(PermissionAdapter.class).toInstance(getPermissionAdapter());
     bind(ChatBootstrapper.class).toInstance(plugin);
+    bind(CommandMap.class).toInstance(getCommandMap());
   }
 
   public PermissionAdapter getPermissionAdapter() {
@@ -52,5 +54,13 @@ public class PluginModule extends AbstractModule {
   private Permission setupPermissions() {
     RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
     return rsp != null ? rsp.getProvider() : null;
+  }
+
+  private CommandMap getCommandMap() {
+    try {
+      return (CommandMap) Bukkit.getServer().getClass().getDeclaredMethod("getCommandMap").invoke(Bukkit.getServer());
+    } catch (Exception e) {
+      throw new RuntimeException("Could not get CommandMap", e);
+    }
   }
 }
