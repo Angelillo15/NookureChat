@@ -1,6 +1,8 @@
 package com.nookure.chat.api.config;
 
+import com.nookure.chat.api.config.partials.BannedWordsConfig;
 import com.nookure.chat.api.config.partials.FloodConfig;
+import com.nookure.chat.api.config.partials.MessageSpamConfig;
 import com.nookure.chat.api.config.partials.SpamConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -19,6 +21,10 @@ public class Config {
     public FloodConfig flood = new FloodConfig();
     @Setting
     public SpamConfig spam = new SpamConfig();
+    @Setting
+    public MessageSpamConfig messageSpam = new MessageSpamConfig();
+    @Setting
+    public BannedWordsConfig bannedWords = new BannedWordsConfig();
   }
 
   public String getPrefix() {
