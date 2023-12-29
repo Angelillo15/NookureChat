@@ -1,4 +1,4 @@
-package com.nookure.chat.api.config.partials;
+package com.nookure.chat.api.config.partials.filters;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;

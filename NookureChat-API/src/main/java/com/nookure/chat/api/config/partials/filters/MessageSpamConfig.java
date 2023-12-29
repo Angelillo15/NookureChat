@@ -1,14 +1,16 @@
-package com.nookure.chat.api.config.partials;
+package com.nookure.chat.api.config.partials.filters;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
-public class BannedWordsConfig extends FilterConfig {
+public class MessageSpamConfig extends FilterConfig {
   @Setting
   private boolean enabled = true;
   @Setting
-  private String denyMessage = "<red>You are not allowed to say that!";
+  private int cooldown = 3;
+  @Setting
+  private String denyMessage = "<red>You are sending messages too fast! Please wait {time} seconds before sending another message.";
   @Override
   public boolean isEnabled() {
     return enabled;
@@ -17,5 +19,9 @@ public class BannedWordsConfig extends FilterConfig {
   @Override
   public String getDenyMessage() {
     return denyMessage;
+  }
+
+  public int getCooldown() {
+    return cooldown;
   }
 }
