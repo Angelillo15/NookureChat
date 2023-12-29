@@ -13,6 +13,7 @@ public class Config {
   private boolean debug = false;
   @Setting
   private String prefix = "<b><red>Chat</red></b> <b><gray>»</gray></b>";
+  @Setting
   public Filters filters = new Filters();
 
   @ConfigSerializable
@@ -34,5 +35,4 @@ public class Config {
   public boolean isDebug() {
     return debug;
   }
-
 }
