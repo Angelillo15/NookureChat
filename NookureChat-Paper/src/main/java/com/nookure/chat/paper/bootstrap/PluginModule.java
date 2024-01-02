@@ -45,6 +45,8 @@ public class PluginModule extends AbstractModule {
       }).toInstance(loadFormatConfig());
       bind(new TypeLiteral<ConfigurationContainer<BannedWordsConfig>>() {
       }).toInstance(loadBannedWordsConfig());
+      bind(new TypeLiteral<ConfigurationContainer<AutoBroadcastConfig>>() {
+      }).toInstance(loadAutoBroadcastConfig());
     } catch (IOException e) {
       plugin.getPLogger().severe("Could not load config");
       throw new RuntimeException(e);
@@ -80,5 +82,9 @@ public class PluginModule extends AbstractModule {
 
   private ConfigurationContainer<BannedWordsConfig> loadBannedWordsConfig() throws IOException {
     return ConfigurationContainer.load(plugin.getDataFolder().toPath(), BannedWordsConfig.class, "bannedWords.yml");
+  }
+
+  private ConfigurationContainer<AutoBroadcastConfig> loadAutoBroadcastConfig() throws IOException {
+    return ConfigurationContainer.load(plugin.getDataFolder().toPath(), AutoBroadcastConfig.class, "broadcast.yml");
   }
 }

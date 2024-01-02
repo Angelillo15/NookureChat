@@ -3,9 +3,7 @@ package com.nookure.chat.paper;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nookure.chat.api.Logger;
-import com.nookure.chat.api.config.Config;
-import com.nookure.chat.api.config.ConfigurationContainer;
-import com.nookure.chat.api.config.FormatConfig;
+import com.nookure.chat.api.config.*;
 import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
@@ -35,6 +33,10 @@ public class NookureChat {
   private ConfigurationContainer<Config> config;
   @Inject
   private ConfigurationContainer<FormatConfig> formatConfig;
+  @Inject
+  private ConfigurationContainer<BannedWordsConfig> bannedWordsConfig;
+  @Inject
+  private ConfigurationContainer<AutoBroadcastConfig> broadcastConfig;
   @Inject
   private CommandMap commandMap;
   @Inject
@@ -75,6 +77,8 @@ public class NookureChat {
   public void reloadConfig() {
     config.reload().join();
     formatConfig.reload().join();
+    bannedWordsConfig.reload().join();
+    broadcastConfig.reload().join();
   }
 
   public void loadCommands() {
