@@ -28,4 +28,32 @@ public class BroadcastGroupPartial {
           {center} <gray>Report it on our <hover:show_text:'<light_purple>Open Discord'><click:open_url:'discord.gg'><blue>discord</blue></click></hover> server
                 """
   );
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public int getInterval() {
+    return interval;
+  }
+
+  public String getHeader() {
+    return header;
+  }
+
+  public String getFooter() {
+    return footer;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public SoundPartial getSound() {
+    return sound;
+  }
+
+  public List<String> getMessages() {
+    return messages;
+  }
 }
