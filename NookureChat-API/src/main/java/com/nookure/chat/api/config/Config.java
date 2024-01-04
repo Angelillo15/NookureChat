@@ -1,5 +1,6 @@
 package com.nookure.chat.api.config;
 
+import com.nookure.chat.api.config.partials.config.ClearChatPartial;
 import com.nookure.chat.api.config.partials.filters.BannedWordsConfig;
 import com.nookure.chat.api.config.partials.filters.FloodConfig;
 import com.nookure.chat.api.config.partials.filters.MessageSpamConfig;
@@ -27,6 +28,8 @@ public class Config {
     @Setting
     public BannedWordsConfig bannedWords = new BannedWordsConfig();
   }
+
+  public final ClearChatPartial clearChat = new ClearChatPartial();
 
   public String getPrefix() {
     return prefix;
