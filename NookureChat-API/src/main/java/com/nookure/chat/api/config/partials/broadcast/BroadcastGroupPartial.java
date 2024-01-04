@@ -23,9 +23,9 @@ public class BroadcastGroupPartial {
   private List<String> messages = List.of(
       "{prefix} <gray>Join our discord server: <hover:show_text:'<b><gold>Click to join</gold></b>'><click:open_url:'https://discord.gg/'>https://discord.gg/</click></hover>",
       """
-          {center} <gray>¿Do you find any hacker?</gray>
+          {center}<gray>¿Do you find any hacker?</gray>
 
-          {center} <gray>Report it on our <hover:show_text:'<light_purple>Open Discord'><click:open_url:'discord.gg'><blue>discord</blue></click></hover> server
+          {center}<gray>Report it on our <hover:show_text:'<light_purple>Open Discord'><click:open_url:'discord.gg'><blue>discord</blue></click></hover> server
                 """
   );
 
