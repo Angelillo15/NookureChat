@@ -13,6 +13,7 @@ import com.nookure.chat.paper.filter.MessageSpamFilter;
 import com.nookure.chat.paper.filter.SpamFilter;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
+import com.nookure.chat.paper.tasks.BroadcastTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.HandlerList;
@@ -46,6 +47,7 @@ public class NookureChat {
     loadListeners();
     registerFilters();
     loadCommands();
+    loadTasks();
   }
 
   public void onDisable() {
@@ -71,6 +73,13 @@ public class NookureChat {
 
     if (formatConfig.get().isEnableJoinQuitMessages()) {
       if (VERSION >= 17) registerListener(PlayerJoinLeaveEvent.class);
+    }
+  }
+
+  public void loadTasks() {
+    logger.debug("Loading tasks...");
+    if (broadcastConfig.get().isEnabled()) {
+      Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, injector.getInstance(BroadcastTask.class), 0, 20);
     }
   }
 
