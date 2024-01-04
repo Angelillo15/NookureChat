@@ -6,6 +6,7 @@ import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.config.*;
 import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
+import com.nookure.chat.paper.cmd.ClearChatCMD;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
 import com.nookure.chat.paper.filter.BannedWordsFilter;
 import com.nookure.chat.paper.filter.FloodFilter;
@@ -93,6 +94,8 @@ public class NookureChat {
   public void loadCommands() {
     logger.debug("Loading commands...");
     commandMap.register("nchat", injector.getInstance(NookureChatCMD.class));
+    if (config.get().clearChat.isEnabled())
+      commandMap.register("nchat", injector.getInstance(ClearChatCMD.class));
   }
 
   public void registerFilters() {
