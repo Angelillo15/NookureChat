@@ -32,6 +32,8 @@ public enum DefaultFontInfo {
   m('m', 5),
   N('N', 5),
   n('n', 5),
+  n_virgulilla('ñ', 5),
+  N_virgulilla('Ñ', 5),
   O('O', 5),
   o('o', 5),
   P('P', 5),
@@ -90,7 +92,8 @@ public enum DefaultFontInfo {
   SINGLE_QUOTE('\'', 1),
   LEFT_ARROW('<', 4),
   RIGHT_ARROW('>', 4),
-  QUESTION_MARK('?', 5),
+  START_QUESTION_MARK('¿', 5),
+  FINISH_QUESTION_MARK('?', 5),
   SLASH('/', 5),
   BACK_SLASH('\\', 5),
   LINE('|', 1),
@@ -99,7 +102,18 @@ public enum DefaultFontInfo {
   PERIOD('.', 1),
   COMMA(',', 1),
   SPACE(' ', 3),
-  DEFAULT('a', 4);
+  DEFAULT('a', 4),
+  // Accented spanish characters
+  ACCENTED_a('á', 5),
+  ACCENTED_A('Á', 5),
+  ACCENTED_e('é', 5),
+  ACCENTED_E('É', 5),
+  ACCENTED_i('í', 3),
+  ACCENTED_I('Í', 3),
+  ACCENTED_o('ó', 5),
+  ACCENTED_O('Ó', 5),
+  ACCENTED_u('ú', 5),
+  ACCENTED_U('Ú', 5);
   private final static int CENTER_PX = 154;
   private final static Pattern pattern = Pattern.compile("<([^>]*)>");
   private final char character;
@@ -127,7 +141,17 @@ public enum DefaultFontInfo {
     for (DefaultFontInfo dFI : DefaultFontInfo.values()) {
       if (dFI.getCharacter() == c) return dFI;
     }
+
     return DefaultFontInfo.DEFAULT;
+  }
+
+  public static String centerIfContains(String message) {
+    if (message.contains("{center}")) {
+      message = message.replace("{center}", "");
+      message = DefaultFontInfo.center(message);
+    }
+
+    return message;
   }
 
   public static String center(String message) {
@@ -167,7 +191,7 @@ public enum DefaultFontInfo {
       finalSb.append(" ");
     }
 
-    return finalSb + message;
+    return finalSb + message.replace("[|", "<").replace("|]", ">");
   }
 
   public static String removeTags(String input) {
@@ -176,12 +200,18 @@ public enum DefaultFontInfo {
 
     while (matcher.find()) {
       String tagContent = matcher.group(1);
-      if (tagContent.equalsIgnoreCase("bold") || tagContent.equalsIgnoreCase("b")) {
-        matcher.appendReplacement(result, Matcher.quoteReplacement("§l"));
-      } else if (tagContent.equalsIgnoreCase("/bold") || tagContent.equalsIgnoreCase("/b")) {
-        matcher.appendReplacement(result, Matcher.quoteReplacement("§r"));
-      } else {
-        matcher.appendReplacement(result, "");
+      switch (tagContent.toLowerCase()) {
+        case "bold":
+        case "b":
+          matcher.appendReplacement(result, Matcher.quoteReplacement("§l"));
+          break;
+        case "/bold":
+        case "/b":
+          matcher.appendReplacement(result, Matcher.quoteReplacement("§r"));
+          break;
+        default:
+          matcher.appendReplacement(result, "");
+          break;
       }
     }
     matcher.appendTail(result);
