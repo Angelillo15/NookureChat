@@ -16,6 +16,14 @@ dependencies {
   implementation(libs.bundles.adventure)
 }
 
+tasks.shadowJar {
+  relocate("com.google.inject", "com.nookure.chat.libs.guice")
+  relocate("com.google.common", "com.nookure.chat.libs.guava")
+  relocate("com.google.thirdparty", "com.nookure.chat.libs.guava.thirdparty")
+  relocate("com.google.errorprone", "com.nookure.chat.libs.errorprone")
+  relocate("com.google.j2objc", "com.nookure.chat.libs.j2objc")
+}
+
 allprojects {
   apply(plugin = "com.github.johnrengelman.shadow")
   apply(plugin = "java")
