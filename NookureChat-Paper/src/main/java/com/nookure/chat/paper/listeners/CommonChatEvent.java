@@ -7,6 +7,7 @@ import com.nookure.chat.api.adapters.PermissionAdapter;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
 import com.nookure.chat.api.managers.FilterManager;
+import com.nookure.chat.paper.NookureChat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -66,9 +67,15 @@ public abstract class CommonChatEvent {
       );
     } else {
       format.set(format.get().replace("%", "%%"));
-      format.set(format.get()
-          .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-      );
+      if (NookureChat.VERSION < 16) {
+        format.set(format.get()
+            .replace("{displayname}", player.getDisplayName())
+        );
+      } else {
+        format.set(format.get()
+            .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
+        );
+      }
     }
 
     format.set(format.get()
