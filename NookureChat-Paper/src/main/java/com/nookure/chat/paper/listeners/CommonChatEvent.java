@@ -13,6 +13,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class CommonChatEvent {
@@ -27,7 +28,11 @@ public abstract class CommonChatEvent {
 
   public boolean check(@NotNull Player player, @NotNull String message) {
     for (var filter : filterManager.getFilters().values()) {
-      if (!player.hasPermission(filter.getFilterData().permission()) && !filter.check(player, message)) {
+      if (
+          (Objects.equals(filter.getFilterData().permission(), "") ||
+              !player.hasPermission(filter.getFilterData().permission())
+          ) && !filter.check(player, message)
+      ) {
         return false;
       }
     }
@@ -72,11 +77,21 @@ public abstract class CommonChatEvent {
     );
 
     if (player.hasPermission("nookurechat.color")) {
-      format.set(format.get().replace("{message}", message));
+      for (var filter : filterManager.getFilters().values()) {
+        message = filter.modify(player, message);
+      }
+
+      format.set(format.get().replace("{message}", TextUtils.toMM(message)));
     } else {
-      format.set(format.get().replace("{message}", PlainTextComponentSerializer.plainText().serialize(
+      String plainMessage = PlainTextComponentSerializer.plainText().serialize(
           MiniMessage.miniMessage().deserialize(message)
-      )));
+      );
+
+      for (var filter : filterManager.getFilters().values()) {
+        plainMessage = filter.modify(player, plainMessage);
+      }
+
+      format.set(format.get().replace("{message}", plainMessage));
     }
 
     return MiniMessage.miniMessage().deserialize(format.get());
