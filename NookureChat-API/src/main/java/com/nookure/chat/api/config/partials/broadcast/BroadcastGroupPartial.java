@@ -25,7 +25,7 @@ public class BroadcastGroupPartial {
       """
           {center}<gray>¿Do you find any hacker?</gray>
 
-          {center}<gray>Report it on our <hover:show_text:'<light_purple>Open Discord'><click:open_url:'discord.gg'><blue>discord</blue></click></hover> server
+          {center}<gray>Report it on our <hover:show_text:'[|light_purple|]Open Discord'><click:open_url:'discord.gg'><blue>discord</blue></click></hover> server
                 """
   );
 
