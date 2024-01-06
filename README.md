@@ -12,8 +12,7 @@ The ultimate chat plugin for your minecraft server, built for modern servers.
 - Anti Spam
 - Clear chat
 - Mentions
-- Command block (in progress)
-- Legacy support (in progress)
+- Legacy support
 
 
 ## Support
