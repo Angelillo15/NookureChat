@@ -3,6 +3,7 @@ package com.nookure.chat.paper.listeners;
 import com.google.inject.Inject;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
+import com.nookure.chat.paper.NookureChat;
 import net.kyori.adventure.title.Title;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,7 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
 
     event.joinMessage(format.joinMessage());
 
-    if (formatConfig.get().isEnableJoinTitles()) {
+    if (formatConfig.get().isEnableJoinTitles() && NookureChat.VERSION >= 16) {
       Player player = event.getPlayer();
 
       Title title = Title.title(
