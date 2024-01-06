@@ -9,6 +9,7 @@ import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
 import com.nookure.chat.paper.cmd.ClearChatCMD;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
 import com.nookure.chat.paper.filter.*;
+import com.nookure.chat.paper.listeners.BukkitPlayerChatEvent;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
 import com.nookure.chat.paper.tasks.BroadcastTask;
@@ -65,12 +66,14 @@ public class NookureChat {
 
   public void loadListeners() {
     logger.debug("Loading listeners...");
-    if (VERSION >= 17) {
+    if (VERSION >= 16) {
       registerListener(PaperChatDecorateEvent.class);
+    } else {
+      registerListener(BukkitPlayerChatEvent.class);
     }
 
     if (formatConfig.get().isEnableJoinQuitMessages()) {
-      if (VERSION >= 17) registerListener(PlayerJoinLeaveEvent.class);
+      if (VERSION >= 16) registerListener(PlayerJoinLeaveEvent.class);
     }
   }
 
