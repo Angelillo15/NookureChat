@@ -21,4 +21,4 @@ vault = { group = "com.github.MilkBowl", name = "VaultAPI", version.ref = "vault
 placeholderApi = { group = "me.clip", name = "placeholderapi", version.ref = "placeholderApi" }
 
 [bundles]
-adventure = [ "adventureApi", "adventureBukkit", "adventureLegacy", "adventureAnsi", "adventurePlaintext" ]
+adventure = [ "adventureApi", "adventureBukkit", "adventureLegacy", "adventureAnsi", "adventurePlaintext", "miniMessage" ]
