@@ -8,10 +8,7 @@ import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
 import com.nookure.chat.paper.cmd.ClearChatCMD;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
-import com.nookure.chat.paper.filter.BannedWordsFilter;
-import com.nookure.chat.paper.filter.FloodFilter;
-import com.nookure.chat.paper.filter.MessageSpamFilter;
-import com.nookure.chat.paper.filter.SpamFilter;
+import com.nookure.chat.paper.filter.*;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
 import com.nookure.chat.paper.tasks.BroadcastTask;
@@ -103,6 +100,7 @@ public class NookureChat {
     filterManager.registerFilter(injector.getInstance(SpamFilter.class), config.get().filters.spam);
     filterManager.registerFilter(injector.getInstance(MessageSpamFilter.class), config.get().filters.messageSpam);
     filterManager.registerFilter(injector.getInstance(BannedWordsFilter.class), config.get().filters.bannedWords);
+    filterManager.registerFilter(injector.getInstance(MentionsFilter.class), config.get().filters.mentions);
   }
 
   public void registerListener(Class<? extends Listener> listener) {
