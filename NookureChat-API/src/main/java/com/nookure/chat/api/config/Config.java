@@ -1,10 +1,8 @@
 package com.nookure.chat.api.config;
 
 import com.nookure.chat.api.config.partials.config.ClearChatPartial;
+import com.nookure.chat.api.config.partials.filters.*;
 import com.nookure.chat.api.config.partials.filters.BannedWordsConfig;
-import com.nookure.chat.api.config.partials.filters.FloodConfig;
-import com.nookure.chat.api.config.partials.filters.MessageSpamConfig;
-import com.nookure.chat.api.config.partials.filters.SpamConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
@@ -27,6 +25,8 @@ public class Config {
     public MessageSpamConfig messageSpam = new MessageSpamConfig();
     @Setting
     public BannedWordsConfig bannedWords = new BannedWordsConfig();
+    @Setting
+    public MentionsFilterConfig mentions = new MentionsFilterConfig();
   }
 
   public final ClearChatPartial clearChat = new ClearChatPartial();
