@@ -46,7 +46,7 @@ public abstract class CommonChatEvent {
 
     AtomicReference<String> prefix = new AtomicReference<>(formatConfig.get().getDefaultPrefix());
     AtomicReference<String> suffix = new AtomicReference<>(formatConfig.get().getDefaultSuffix());
-    AtomicReference<String> format = new AtomicReference<>(formatConfig.get().getDefaultFormat());
+    AtomicReference<String> format = new AtomicReference<>(TextUtils.toMM(formatConfig.get().getDefaultFormat()));
 
     logger.debug("User %s with group %s sent a message: %s", player.getName(), group, message);
 
