@@ -22,6 +22,8 @@ tasks.shadowJar {
   relocate("com.google.thirdparty", "com.nookure.chat.libs.guava.thirdparty")
   relocate("com.google.errorprone", "com.nookure.chat.libs.errorprone")
   relocate("com.google.j2objc", "com.nookure.chat.libs.j2objc")
+
+  archiveFileName.set("NookureChat-${version}.jar")
 }
 
 allprojects {
