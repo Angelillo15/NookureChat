@@ -8,11 +8,13 @@ import com.nookure.chat.api.config.partials.filters.FilterConfig;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Optional;
+import java.util.TreeMap;
 
 @Singleton
 public class FilterManager {
-  private HashMap<ChatFilterData, ChatFilter> filters = new HashMap<>();
-  private LinkedHashMap<String, ChatFilterData> filterData = new LinkedHashMap<>();
+  private final HashMap<ChatFilterData, ChatFilter> filters = new HashMap<>();
+  private final LinkedHashMap<String, ChatFilterData> filterData = new LinkedHashMap<>();
+  private final TreeMap<String, ChatFilter> sortedFilters = new TreeMap<>();
 
   public void registerFilter(ChatFilter filter, FilterConfig config) {
     if (!config.isEnabled()) return;
@@ -21,7 +23,9 @@ public class FilterManager {
     if (data == null) {
       throw new IllegalArgumentException("ChatFilterData annotation not found on " + filter.getClass().getName());
     }
+
     filters.put(data, filter);
+    sortedFilters.put(data.name(), filter);
     filterData.put(data.name(), data);
   }
 
@@ -39,5 +43,9 @@ public class FilterManager {
 
   public LinkedHashMap<String, ChatFilterData> getFilterData() {
     return filterData;
+  }
+
+  public TreeMap<String, ChatFilter> getSortedFilters() {
+    return sortedFilters;
   }
 }
