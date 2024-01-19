@@ -27,6 +27,8 @@ public class Config {
     public BannedWordsConfig bannedWords = new BannedWordsConfig();
     @Setting
     public MentionsFilterConfig mentions = new MentionsFilterConfig();
+    @Setting
+    public RepeatedMessageConfig repeatedMessage = new RepeatedMessageConfig();
   }
 
   public final ClearChatPartial clearChat = new ClearChatPartial();
