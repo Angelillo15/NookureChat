@@ -3,6 +3,7 @@ package com.nookure.chat.paper.filter;
 import com.google.inject.Inject;
 import com.nookure.chat.api.chat.ChatFilter;
 import com.nookure.chat.api.chat.ChatFilterData;
+import com.nookure.chat.api.chat.ChatFilterPriority;
 import com.nookure.chat.api.config.Config;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import org.bukkit.entity.Player;
@@ -15,7 +16,8 @@ import static com.nookure.chat.paper.utils.MessageUtils.sendMessage;
 
 @ChatFilterData(
     name = "messageSpam",
-    permission = "nookurechat.bypass.filter.messageSpam"
+    permission = "nookurechat.bypass.filter.messageSpam",
+    priority = ChatFilterPriority.LATEST
 )
 public class MessageSpamFilter extends ChatFilter {
   @Inject
