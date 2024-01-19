@@ -27,6 +27,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     String quitMessage = formatConfig.get().getDefaultQuitMessage();
     String joinTitleMessage = formatConfig.get().getDefaultTitleJoinMessage();
     String joinSubtitleMessage = formatConfig.get().getDefaultSubtitleJoinMessage();
+    String firstJoinMessage = formatConfig.get().getDefaultJoinMessage();
 
     logger.debug("User %s with group %s joined the server", player.getName(), group);
 
@@ -61,15 +62,22 @@ public abstract class CommonPlayerJoinLeaveEvent {
         .replace("{prefix}", prefix)
         .replace("{suffix}", suffix);
 
+    firstJoinMessage = firstJoinMessage
+        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
+        .replace("{prefix}", prefix)
+        .replace("{suffix}", suffix);
+
     return new Response(
         MiniMessage.miniMessage().deserialize(joinMessage),
         MiniMessage.miniMessage().deserialize(quitMessage),
         MiniMessage.miniMessage().deserialize(joinTitleMessage),
-        MiniMessage.miniMessage().deserialize(joinSubtitleMessage)
+        MiniMessage.miniMessage().deserialize(joinSubtitleMessage),
+        MiniMessage.miniMessage().deserialize(firstJoinMessage)
     );
   }
 
-  public record Response(Component joinMessage, Component quitMessage, Component titleJoinMessage, Component subtitleJoinMessage) {
+  public record Response(Component joinMessage, Component quitMessage, Component titleJoinMessage,
+                         Component subtitleJoinMessage, Component fistJoinMessage) {
 
   }
 }
