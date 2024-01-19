@@ -1,11 +1,11 @@
 package com.nookure.chat.api.chat;
 
 public enum ChatFilterPriority {
-  LOWEST(0),
-  LOW(1),
+  FIRST(0),
+  BEFORE_NORMAL(1),
   NORMAL(2),
-  HIGH(3),
-  HIGHEST(4);
+  LAST(3),
+  LATEST(4);
 
   private final int priority;
 
