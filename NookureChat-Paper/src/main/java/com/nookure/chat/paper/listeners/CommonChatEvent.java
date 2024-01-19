@@ -27,8 +27,9 @@ public abstract class CommonChatEvent {
   @Inject
   private Logger logger;
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean check(@NotNull Player player, @NotNull String message) {
-    for (var filter : filterManager.getFilters().values()) {
+    for (var filter : filterManager.getSortedFilters().values()) {
       if (
           (Objects.equals(filter.getFilterData().permission(), "") ||
               !player.hasPermission(filter.getFilterData().permission())
@@ -46,7 +47,7 @@ public abstract class CommonChatEvent {
 
     AtomicReference<String> prefix = new AtomicReference<>(formatConfig.get().getDefaultPrefix());
     AtomicReference<String> suffix = new AtomicReference<>(formatConfig.get().getDefaultSuffix());
-    AtomicReference<String> format = new AtomicReference<>(TextUtils.toMM(formatConfig.get().getDefaultFormat()));
+    AtomicReference<String> format = new AtomicReference<>(formatConfig.get().getDefaultFormat());
 
     logger.debug("User %s with group %s sent a message: %s", player.getName(), group, message);
 
@@ -58,7 +59,7 @@ public abstract class CommonChatEvent {
       format.set(groupConfig.getFormat().replace("{default}", format.get()));
     }
 
-    format.set(TextUtils.processPlaceholders(player, format.get()));
+    format.set(TextUtils.toMM(TextUtils.processPlaceholders(player, format.get())));
 
     if (format.get().contains("{displayname}") && message.contains("{message}")) {
       format.set(format.get()
