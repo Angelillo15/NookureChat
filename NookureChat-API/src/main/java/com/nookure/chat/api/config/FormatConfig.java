@@ -1,9 +1,9 @@
 package com.nookure.chat.api.config;
 
+import com.nookure.chat.api.config.partials.format.HoverFormatConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @ConfigSerializable
@@ -28,6 +28,8 @@ public class FormatConfig {
   private boolean enableJoinQuitMessages = true;
   @Setting
   private boolean enableJoinTitles = true;
+  @Setting
+  public final HoverFormatConfig hoverFormat = new HoverFormatConfig();
 
   public String getDefaultJoinMessage() {
     return defaultJoinMessage;

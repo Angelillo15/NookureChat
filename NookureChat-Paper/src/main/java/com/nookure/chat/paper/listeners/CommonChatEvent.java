@@ -59,6 +59,17 @@ public abstract class CommonChatEvent {
       format.set(groupConfig.getFormat().replace("{default}", format.get()));
     }
 
+    if (formatConfig.get().hoverFormat.isEnabled()) {
+      format.set(format.get().replace("{displayname}",
+          "<hover:show_text:'{replace_text}'>{displayname}</hover>"
+              .replace(
+                  "{replace_text}",
+                  String.join("\n", formatConfig.get().hoverFormat.getLines())
+              )
+          )
+      );
+    }
+
     format.set(TextUtils.toMM(TextUtils.processPlaceholders(player, format.get())));
 
     if (format.get().contains("{displayname}") && message.contains("{message}")) {
