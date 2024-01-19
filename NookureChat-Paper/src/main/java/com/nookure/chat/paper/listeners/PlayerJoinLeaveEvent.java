@@ -22,9 +22,19 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
     CommonPlayerJoinLeaveEvent.Response format = format(event.getPlayer());
 
     if (NookureChat.VERSION < 16) {
+      if (!event.getPlayer().hasPlayedBefore()) {
+        event.setJoinMessage(LegacyComponentSerializer.legacy('§').serialize(format.fistJoinMessage()));
+        return;
+      }
+
       event.setJoinMessage(LegacyComponentSerializer.legacy('§').serialize(format.joinMessage()));
       return;
     } else {
+      if (!event.getPlayer().hasPlayedBefore()) {
+        event.joinMessage(format.fistJoinMessage());
+        return;
+      }
+
       event.joinMessage(format.joinMessage());
     }
 

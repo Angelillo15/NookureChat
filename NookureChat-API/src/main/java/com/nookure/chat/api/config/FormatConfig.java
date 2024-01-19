@@ -23,6 +23,8 @@ public class FormatConfig {
   @Setting
   private String defaultSubtitleJoinMessage = "<gray>Enjoy your stay!";
   @Setting
+  private String firstJoinMessage = "{player} <gray>has joined for the first time!";
+  @Setting
   private boolean enableJoinQuitMessages = true;
   @Setting
   private boolean enableJoinTitles = true;
@@ -61,6 +63,9 @@ public class FormatConfig {
 
   public String getDefaultSubtitleJoinMessage() {
     return defaultSubtitleJoinMessage;
+  }
+  public String getFirstJoinMessage() {
+    return firstJoinMessage;
   }
 
   @Setting
