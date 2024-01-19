@@ -104,6 +104,7 @@ public class NookureChat {
     filterManager.registerFilter(injector.getInstance(MessageSpamFilter.class), config.get().filters.messageSpam);
     filterManager.registerFilter(injector.getInstance(BannedWordsFilter.class), config.get().filters.bannedWords);
     filterManager.registerFilter(injector.getInstance(MentionsFilter.class), config.get().filters.mentions);
+    filterManager.registerFilter(injector.getInstance(RepeatedMessageFilter.class), config.get().filters.repeatedMessage);
   }
 
   public void registerListener(Class<? extends Listener> listener) {
