@@ -9,6 +9,8 @@ import com.nookure.chat.api.config.ConfigurationContainer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static com.nookure.chat.paper.utils.MessageUtils.sendMessage;
+
 @ChatFilterData(
     name = "bannedWords",
     permission = "nookurechat.bypass.filter.bannedWords"
@@ -22,7 +24,7 @@ public class BannedWordsFilter extends ChatFilter {
   public boolean check(@NotNull Player player, @NotNull String message) {
     for (String word : bannedWordsConfig.get().getWords()) {
       if (message.toLowerCase().contains(word.toLowerCase())) {
-        player.sendMessage(config.get().filters.bannedWords.getDenyMessage());
+        sendMessage(player, config.get().filters.bannedWords.getDenyMessage());
         return false;
       }
     }
