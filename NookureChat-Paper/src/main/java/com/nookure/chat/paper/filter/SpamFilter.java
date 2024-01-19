@@ -21,8 +21,15 @@ public class SpamFilter extends ChatFilter {
   private ConfigurationContainer<Config> config;
   public static final Pattern IPV4_REGEX = Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$");
   public static final Pattern DOMAIN_REGEX = Pattern.compile("(https://www\\.|//mc\\.|//play\\.|http://www\\.|https://|http://)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})(\\.[a-zA-Z0-9]{2,})?");
+
   @Override
   public boolean check(@NotNull Player player, @NotNull String message) {
+    for (String s : message.split(" ")) {
+      if (config.get().filters.spam.getWhitelistedDomains().contains(s)) {
+        return true;
+      }
+    }
+
     if (IPV4_REGEX.matcher(message).find() || DOMAIN_REGEX.matcher(message).find()) {
       sendMessage(player, config.get().filters.spam.getDenyMessage());
       return false;
