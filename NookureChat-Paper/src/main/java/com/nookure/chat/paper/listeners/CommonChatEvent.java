@@ -72,7 +72,7 @@ public abstract class CommonChatEvent {
 
     format.set(TextUtils.toMM(TextUtils.processPlaceholders(player, format.get())));
 
-    if (format.get().contains("{displayname}") && message.contains("{message}")) {
+    if (format.get().contains("{displayname}") && message.contains("{message}") && NookureChat.VERSION >= 16) {
       format.set(format.get()
           .replace("{displayname}", "%s")
           .replace("{message}", "%s")

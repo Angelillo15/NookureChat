@@ -9,9 +9,7 @@ import com.nookure.chat.api.config.ConfigurationContainer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.nookure.chat.paper.utils.MessageUtils.sendMessage;
 
@@ -33,13 +31,9 @@ public class RepeatedMessageFilter extends ChatFilter {
       return true;
     }
 
-    List<Message> lastMessages = lastMessageMap.get(player.getUniqueId());
+    List<Message> lastMessages = new ArrayList<>(lastMessageMap.get(player.getUniqueId()));
 
-    lastMessages.forEach(m -> {
-      if (System.currentTimeMillis() - m.time() > config.get().filters.repeatedMessage.getTimeRestriction() * 1000L) {
-        lastMessages.remove(m);
-      }
-    });
+    lastMessages.removeIf(m -> System.currentTimeMillis() - m.time() > config.get().filters.repeatedMessage.getTimeRestriction() * 1000L);
 
     for (Message m : lastMessages) {
       if (m.message().equals(message)) {

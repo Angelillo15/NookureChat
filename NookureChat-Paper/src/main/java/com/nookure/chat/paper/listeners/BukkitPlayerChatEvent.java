@@ -1,6 +1,7 @@
 package com.nookure.chat.paper.listeners;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,10 +15,18 @@ public class BukkitPlayerChatEvent extends CommonChatEvent implements Listener {
       return;
     }
 
+    event.setCancelled(true);
+
     String stripped = event.getMessage();
 
-    event.setCancelled(!check(event.getPlayer(), stripped));
+    if (!check(event.getPlayer(), stripped)) {
+      return;
+    }
 
-    event.setFormat(LegacyComponentSerializer.legacy('§').serialize(format(event.getPlayer(), stripped)));
+    String finalMessage = LegacyComponentSerializer.legacy('§').serialize(format(event.getPlayer(), stripped));
+
+    event.getRecipients().forEach(player -> player.sendMessage(finalMessage));
+
+    Bukkit.getConsoleSender().sendMessage(finalMessage);
   }
 }
