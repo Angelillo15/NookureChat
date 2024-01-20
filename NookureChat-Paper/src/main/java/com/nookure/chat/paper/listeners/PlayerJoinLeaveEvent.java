@@ -3,6 +3,7 @@ package com.nookure.chat.paper.listeners;
 import com.google.inject.Inject;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
+import com.nookure.chat.api.config.JoinMotdConfig;
 import com.nookure.chat.paper.NookureChat;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
@@ -12,10 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import static com.nookure.chat.paper.utils.MessageUtils.sendMessage;
+
 @SuppressWarnings("deprecation")
 public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements Listener {
   @Inject
   private ConfigurationContainer<FormatConfig> formatConfig;
+  @Inject
+  private ConfigurationContainer<JoinMotdConfig> joinMotdConfig;
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent event) {
@@ -47,6 +52,10 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
       );
 
       player.showTitle(title);
+    }
+
+    if (joinMotdConfig.get().isEnabled()) {
+      sendMessage(event.getPlayer(), joinMotdConfig.get().getMotd());
     }
   }
 
