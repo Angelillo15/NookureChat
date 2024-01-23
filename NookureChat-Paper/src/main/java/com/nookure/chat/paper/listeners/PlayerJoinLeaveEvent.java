@@ -1,6 +1,7 @@
 package com.nookure.chat.paper.listeners;
 
 import com.google.inject.Inject;
+import com.nookure.chat.api.TextUtils;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
 import com.nookure.chat.api.config.JoinMotdConfig;
@@ -55,7 +56,7 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
     }
 
     if (joinMotdConfig.get().isEnabled()) {
-      sendMessage(event.getPlayer(), joinMotdConfig.get().getMotd());
+      sendMessage(event.getPlayer(), TextUtils.processPlaceholders(event.getPlayer(), joinMotdConfig.get().getMotd()));
     }
   }
 
