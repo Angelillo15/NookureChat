@@ -60,14 +60,28 @@ public abstract class CommonChatEvent {
     }
 
     if (formatConfig.get().hoverFormat.isEnabled()) {
+      String text = TextUtils.processPlaceholders(
+          player,
+          String.join("\n", formatConfig.get().hoverFormat.getLines())
+      );
+
       format.set(format.get().replace("{displayname}",
           "<hover:show_text:'{replace_text}'>{displayname}</hover>"
               .replace(
                   "{replace_text}",
-                  String.join("\n", formatConfig.get().hoverFormat.getLines())
+                  text
               )
           )
       );
+
+      format.set(format.get().replace("{hover_start}", "<hover:show_text:'{replace_text}'>"
+          .replace(
+              "{replace_text}",
+              text
+          )
+      ));
+
+      format.set(format.get().replace("{hover_end}", "</hover>"));
     }
 
     format.set(TextUtils.toMM(TextUtils.processPlaceholders(player, format.get())));
