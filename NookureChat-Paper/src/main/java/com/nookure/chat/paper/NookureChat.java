@@ -13,6 +13,7 @@ import com.nookure.chat.paper.listeners.BukkitPlayerChatEvent;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
 import com.nookure.chat.paper.tasks.BroadcastTask;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.HandlerList;
@@ -43,6 +44,7 @@ public class NookureChat {
   private Logger logger;
 
   public void onEnable() {
+    new Metrics(plugin, 21151);
     loadListeners();
     registerFilters();
     loadCommands();
@@ -105,6 +107,7 @@ public class NookureChat {
     filterManager.registerFilter(injector.getInstance(BannedWordsFilter.class), config.get().filters.bannedWords);
     filterManager.registerFilter(injector.getInstance(MentionsFilter.class), config.get().filters.mentions);
     filterManager.registerFilter(injector.getInstance(RepeatedMessageFilter.class), config.get().filters.repeatedMessage);
+    filterManager.registerFilter(injector.getInstance(CapitalizationFilter.class), config.get().filters.capitalization);
   }
 
   public void registerListener(Class<? extends Listener> listener) {
