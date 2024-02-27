@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.nookure.chat"
-version = "1.0.0"
+version = "1.0.1"
 
 dependencies {
   // Implements projects
@@ -14,6 +14,7 @@ dependencies {
   implementation(libs.guice)
   implementation(libs.configurateYaml)
   implementation(libs.bundles.adventure)
+  implementation(libs.bstatsBukkit)
 }
 
 tasks.shadowJar {
@@ -22,6 +23,7 @@ tasks.shadowJar {
   relocate("com.google.thirdparty", "com.nookure.chat.libs.guava.thirdparty")
   relocate("com.google.errorprone", "com.nookure.chat.libs.errorprone")
   relocate("com.google.j2objc", "com.nookure.chat.libs.j2objc")
+  relocate("org.bstats", "com.nookure.chat.libs.bstats")
 
   archiveFileName.set("NookureChat-${version}.jar")
 }

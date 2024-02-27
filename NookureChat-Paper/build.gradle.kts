@@ -7,11 +7,7 @@ dependencies {
   compileOnly(libs.paperApi)
   compileOnly(libs.bundles.adventure)
   compileOnly(libs.vault)
-  implementation(libs.bstatsBukkit)
-}
-
-tasks.shadowJar {
-  relocate("org.bstats", "com.nookure.chat.libs.bstats")
+  compileOnly(libs.bstatsBukkit)
 }
 
 bukkit {
