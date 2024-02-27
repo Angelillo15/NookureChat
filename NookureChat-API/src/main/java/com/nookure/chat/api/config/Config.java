@@ -29,6 +29,8 @@ public class Config {
     public MentionsFilterConfig mentions = new MentionsFilterConfig();
     @Setting
     public RepeatedMessageConfig repeatedMessage = new RepeatedMessageConfig();
+    @Setting
+    public CapitalizationFilterConfig capitalization = new CapitalizationFilterConfig();
   }
 
   public final ClearChatPartial clearChat = new ClearChatPartial();
