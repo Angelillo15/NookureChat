@@ -32,7 +32,18 @@ public class TextUtils {
   }
 
   public static String toMM(String str) {
-    str = str.replace("§", "&")
+    if (str.contains("#")) {
+      Matcher matcher = hexPattern.matcher(str);
+      StringBuilder buffer = new StringBuilder();
+      while (matcher.find()) {
+        String replacement = String.format("<#%s>", matcher.group(1));
+        matcher.appendReplacement(buffer, replacement);
+      }
+      matcher.appendTail(buffer);
+      str = buffer.toString();
+    }
+
+    return str.replace("§", "&")
       .replace("&0", "<black>")
       .replace("&1", "<dark_blue>")
       .replace("&2", "<dark_green>")
@@ -55,18 +66,5 @@ public class TextUtils {
       .replace("&n", "<u>")
       .replace("&o", "<i>")
       .replace("&r", "<reset>");
-
-    if (str.contains("#")) {
-      Matcher matcher = hexPattern.matcher(str);
-      StringBuilder buffer = new StringBuilder();
-      while (matcher.find()) {
-        String replacement = String.format("<#%s>", matcher.group(1));
-        matcher.appendReplacement(buffer, replacement);
-      }
-      matcher.appendTail(buffer);
-      str = buffer.toString();
-    }
-
-    return str;
   }
 }
