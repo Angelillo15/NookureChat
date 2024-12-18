@@ -1,5 +1,8 @@
 package com.nookure.chat.api.config;
 
+import com.nookure.chat.api.config.serializer.BukkitSoundSerializer;
+import io.leangen.geantyref.TypeToken;
+import org.bukkit.Sound;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.yaml.NodeStyle;
@@ -81,6 +84,7 @@ public class ConfigurationContainer<C> {
                  https://discord.nookure.com/
                  
                 """)
+            .serializers(builder -> builder.register(TypeToken.get(Sound.class), new BukkitSoundSerializer()))
         )
         .path(path)
         .build();
