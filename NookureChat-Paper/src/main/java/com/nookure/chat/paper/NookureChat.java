@@ -39,6 +39,8 @@ public class NookureChat {
   @Inject
   private ConfigurationContainer<AutoBroadcastConfig> broadcastConfig;
   @Inject
+  private ConfigurationContainer<JoinMotdConfig> joinMotdConfig;
+  @Inject
   private CommandMap commandMap;
   @Inject
   private Logger logger;
@@ -91,6 +93,7 @@ public class NookureChat {
     formatConfig.reload().join();
     bannedWordsConfig.reload().join();
     broadcastConfig.reload().join();
+    joinMotdConfig.reload().join();
   }
 
   public void loadCommands() {
