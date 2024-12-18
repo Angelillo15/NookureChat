@@ -1,10 +1,11 @@
 plugins {
   id("java")
-  id("com.github.johnrengelman.shadow") version "8.1.1"
+  id("com.gradleup.shadow") version "8.3.5"
+  id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = "com.nookure.chat"
-version = "1.0.1"
+version = "1.1.0"
 
 dependencies {
   // Implements projects
@@ -46,12 +47,26 @@ allprojects {
 
   java {
     toolchain {
-      languageVersion.set(JavaLanguageVersion.of(17))
+      languageVersion.set(JavaLanguageVersion.of(21))
     }
   }
 
   dependencies {
     compileOnly(rootProject.libs.guice)
     compileOnly(rootProject.libs.adventureApi)
+  }
+}
+
+
+tasks {
+  runServer {
+    minecraftVersion("1.21.4")
+  }
+}
+
+tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
+  javaLauncher = javaToolchains.launcherFor {
+    vendor = JvmVendorSpec.ORACLE
+    languageVersion = JavaLanguageVersion.of(23)
   }
 }
