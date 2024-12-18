@@ -109,24 +109,24 @@ public abstract class CommonChatEvent {
         .replace("{suffix}", suffix.get())
     );
 
+    Component formatted = MiniMessage.miniMessage().deserialize(format.get());
+    Component messageComponent;
+
     if (player.hasPermission("nookurechat.color")) {
       for (var filter : filterManager.getFilters().values()) {
         message = filter.modify(player, message);
       }
 
-      format.set(format.get().replace("{message}", TextUtils.toMM(message)));
+      messageComponent = TextUtils.CHAT_FORMATTER.deserialize(TextUtils.toMM(message));
     } else {
-      String plainMessage = PlainTextComponentSerializer.plainText().serialize(
-          MiniMessage.miniMessage().deserialize(message)
-      );
-
-      for (var filter : filterManager.getFilters().values()) {
-        plainMessage = filter.modify(player, plainMessage);
-      }
-
-      format.set(format.get().replace("{message}", plainMessage));
+      messageComponent = PlainTextComponentSerializer.plainText().deserialize(message);
     }
 
-    return MiniMessage.miniMessage().deserialize(format.get());
+    formatted = formatted.replaceText(builder -> {
+      builder.matchLiteral("{message}");
+      builder.replacement(messageComponent);
+    });
+
+    return formatted;
   }
 }
