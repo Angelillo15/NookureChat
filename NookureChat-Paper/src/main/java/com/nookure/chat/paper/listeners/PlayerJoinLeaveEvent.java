@@ -27,22 +27,12 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
   public void onPlayerJoin(PlayerJoinEvent event) {
     CommonPlayerJoinLeaveEvent.Response format = format(event.getPlayer());
 
-    if (NookureChat.VERSION < 16) {
-      if (!event.getPlayer().hasPlayedBefore()) {
-        event.setJoinMessage(LegacyComponentSerializer.legacy('§').serialize(format.fistJoinMessage()));
-        return;
-      }
-
-      event.setJoinMessage(LegacyComponentSerializer.legacy('§').serialize(format.joinMessage()));
+    if (!event.getPlayer().hasPlayedBefore()) {
+      event.joinMessage(format.fistJoinMessage());
       return;
-    } else {
-      if (!event.getPlayer().hasPlayedBefore()) {
-        event.joinMessage(format.fistJoinMessage());
-        return;
-      }
-
-      event.joinMessage(format.joinMessage());
     }
+
+    event.joinMessage(format.joinMessage());
 
     if (formatConfig.get().isEnableJoinTitles()) {
       Player player = event.getPlayer();
@@ -62,10 +52,6 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
 
   @EventHandler
   public void onPlayerLeave(PlayerQuitEvent event) {
-    if (NookureChat.VERSION < 16) {
-      event.setQuitMessage(LegacyComponentSerializer.legacy('§').serialize(format(event.getPlayer()).quitMessage()));
-    } else {
-      event.quitMessage(format(event.getPlayer()).quitMessage());
-    }
+    event.quitMessage(format(event.getPlayer()).quitMessage());
   }
 }

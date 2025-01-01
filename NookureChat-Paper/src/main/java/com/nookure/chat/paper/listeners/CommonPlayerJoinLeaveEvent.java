@@ -27,7 +27,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     String quitMessage = formatConfig.get().getDefaultQuitMessage();
     String joinTitleMessage = formatConfig.get().getDefaultTitleJoinMessage();
     String joinSubtitleMessage = formatConfig.get().getDefaultSubtitleJoinMessage();
-    String firstJoinMessage = formatConfig.get().getDefaultJoinMessage();
+    String firstJoinMessage = formatConfig.get().getFirstJoinMessage();
 
     logger.debug("User %s with group %s joined the server", player.getName(), group);
 
@@ -42,30 +42,45 @@ public abstract class CommonPlayerJoinLeaveEvent {
       joinSubtitleMessage = groupConfig.getSubtitleJoinMessage().replace("{default}", joinSubtitleMessage);
     }
 
-    joinMessage = joinMessage
-        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-        .replace("{prefix}", prefix)
-        .replace("{suffix}", suffix);
+    joinMessage = replaceJoinMessage(
+        joinMessage,
+        player.getName(),
+        MiniMessage.miniMessage().serialize(player.displayName()),
+        prefix,
+        suffix
+    );
 
-    quitMessage = quitMessage
-        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-        .replace("{prefix}", prefix)
-        .replace("{suffix}", suffix);
+    quitMessage = replaceJoinMessage(
+        quitMessage,
+        player.getName(),
+        MiniMessage.miniMessage().serialize(player.displayName()),
+        prefix,
+        suffix
+    );
 
-    joinTitleMessage = joinTitleMessage
-        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-        .replace("{prefix}", prefix)
-        .replace("{suffix}", suffix);
+    joinTitleMessage = replaceJoinMessage(
+        joinTitleMessage,
+        player.getName(),
+        MiniMessage.miniMessage().serialize(player.displayName()),
+        prefix,
+        suffix
+    );
 
-    joinSubtitleMessage = joinSubtitleMessage
-        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-        .replace("{prefix}", prefix)
-        .replace("{suffix}", suffix);
+    joinSubtitleMessage = replaceJoinMessage(
+        joinSubtitleMessage,
+        player.getName(),
+        MiniMessage.miniMessage().serialize(player.displayName()),
+        prefix,
+        suffix
+    );
 
-    firstJoinMessage = firstJoinMessage
-        .replace("{displayname}", MiniMessage.miniMessage().serialize(player.displayName()))
-        .replace("{prefix}", prefix)
-        .replace("{suffix}", suffix);
+    firstJoinMessage = replaceJoinMessage(
+        firstJoinMessage,
+        player.getName(),
+        MiniMessage.miniMessage().serialize(player.displayName()),
+        prefix,
+        suffix
+    );
 
     return new Response(
         MiniMessage.miniMessage().deserialize(joinMessage),
@@ -78,6 +93,20 @@ public abstract class CommonPlayerJoinLeaveEvent {
 
   public record Response(Component joinMessage, Component quitMessage, Component titleJoinMessage,
                          Component subtitleJoinMessage, Component fistJoinMessage) {
+  }
 
+  public String replaceJoinMessage(
+      @NotNull String message,
+      @NotNull final String name,
+      @NotNull final String displayName,
+      @NotNull final String prefix,
+      @NotNull final String suffix
+  ) {
+    message = message.replace("{displayname}", displayName);
+    message = message.replace("{name}", name);
+    message = message.replace("{prefix}", prefix);
+    message = message.replace("{suffix}", suffix);
+
+    return message;
   }
 }
