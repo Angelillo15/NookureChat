@@ -7,6 +7,7 @@ import com.nookure.chat.api.NookureChat;
 import com.nookure.chat.api.adapters.NoImplPermissionAdapter;
 import com.nookure.chat.api.adapters.PermissionAdapter;
 import com.nookure.chat.api.adapters.VaultPermissionAdapter;
+import com.nookure.chat.api.annotation.MuteChatActive;
 import com.nookure.chat.api.config.*;
 import com.nookure.chat.api.managers.FilterManager;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -15,6 +16,7 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PluginModule extends AbstractModule {
   private final ChatBootstrapper plugin;
@@ -37,6 +39,10 @@ public class PluginModule extends AbstractModule {
     bind(PermissionAdapter.class).toInstance(getPermissionAdapter());
     bind(ChatBootstrapper.class).toInstance(plugin);
     bind(CommandMap.class).toInstance(getCommandMap());
+
+    bind(AtomicBoolean.class)
+        .annotatedWith(MuteChatActive.class)
+        .toInstance(new AtomicBoolean(false));
 
     try {
       bind(new TypeLiteral<ConfigurationContainer<Config>>() {

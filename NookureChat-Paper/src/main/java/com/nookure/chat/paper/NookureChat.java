@@ -7,9 +7,9 @@ import com.nookure.chat.api.config.*;
 import com.nookure.chat.api.managers.FilterManager;
 import com.nookure.chat.paper.bootstrap.ChatBootstrapper;
 import com.nookure.chat.paper.cmd.ClearChatCMD;
+import com.nookure.chat.paper.cmd.MuteChatCMD;
 import com.nookure.chat.paper.cmd.NookureChatCMD;
 import com.nookure.chat.paper.filter.*;
-import com.nookure.chat.paper.listeners.BukkitPlayerChatEvent;
 import com.nookure.chat.paper.listeners.PaperChatDecorateEvent;
 import com.nookure.chat.paper.listeners.PlayerJoinLeaveEvent;
 import com.nookure.chat.paper.tasks.BroadcastTask;
@@ -70,11 +70,7 @@ public class NookureChat {
 
   public void loadListeners() {
     logger.debug("Loading listeners...");
-    if (VERSION >= 16) {
-      registerListener(PaperChatDecorateEvent.class);
-    } else {
-      registerListener(BukkitPlayerChatEvent.class);
-    }
+    registerListener(PaperChatDecorateEvent.class);
 
     if (formatConfig.get().isEnableJoinQuitMessages()) {
       if (VERSION >= 16) registerListener(PlayerJoinLeaveEvent.class);
@@ -99,8 +95,10 @@ public class NookureChat {
   public void loadCommands() {
     logger.debug("Loading commands...");
     commandMap.register("nchat", injector.getInstance(NookureChatCMD.class));
+    commandMap.register("nchat", injector.getInstance(MuteChatCMD.class));
     if (config.get().clearChat.isEnabled())
       commandMap.register("nchat", injector.getInstance(ClearChatCMD.class));
+
   }
 
   public void registerFilters() {

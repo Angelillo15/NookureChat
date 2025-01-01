@@ -1,6 +1,7 @@
 package com.nookure.chat.api.config;
 
 import com.nookure.chat.api.config.partials.config.ClearChatPartial;
+import com.nookure.chat.api.config.partials.config.Messages;
 import com.nookure.chat.api.config.partials.filters.*;
 import com.nookure.chat.api.config.partials.filters.BannedWordsConfig;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -14,6 +15,8 @@ public class Config {
   private String prefix = "<b><red>Chat</red></b> <b><gray>»</gray></b>";
   @Setting
   public Filters filters = new Filters();
+  @Setting
+  public Messages messages = new Messages();
 
   @ConfigSerializable
   public static final class Filters {

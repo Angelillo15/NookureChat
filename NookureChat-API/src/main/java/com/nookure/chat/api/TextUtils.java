@@ -4,6 +4,8 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.*;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -81,5 +83,23 @@ public class TextUtils {
     }
 
     return str;
+  }
+
+  public static void sendMessage(@NotNull CommandSender player, @NotNull String message) {
+    if (message.isEmpty()) {
+      return;
+    }
+
+    player.sendMessage(MiniMessage.miniMessage().deserialize(toMM(message)));
+  }
+
+  public static void broadcastMessage(@NotNull String message) {
+    if (message.isEmpty()) {
+      return;
+    }
+
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.sendMessage(MiniMessage.miniMessage().deserialize(toMM(message)));
+    }
   }
 }
