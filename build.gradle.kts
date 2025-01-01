@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.nookure.chat"
-version = "1.1.0"
+version = "1.1.1"
 
 dependencies {
   // Implements projects
