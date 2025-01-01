@@ -36,7 +36,7 @@ public class TextUtils {
   public static String processPlaceholders(Player player, String message) {
     try {
       if (isPlaceholderAPI) {
-        return PlaceholderAPI.setPlaceholders(player, message);
+        return toMM(PlaceholderAPI.setPlaceholders(player, message));
       }
     } catch (Exception e) {
       return message;
