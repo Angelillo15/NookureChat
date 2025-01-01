@@ -23,9 +23,15 @@ public class BannedWordsFilter extends ChatFilter {
   @Override
   public boolean check(@NotNull Player player, @NotNull String message) {
     for (String word : bannedWordsConfig.get().getWords()) {
-      if (message.toLowerCase().contains(word.toLowerCase())) {
-        sendMessage(player, config.get().filters.bannedWords.getDenyMessage());
-        return false;
+      var split = message.split(" ");
+
+      if (split.length > 1) {
+        for (String s : split) {
+          if (s.equalsIgnoreCase(word)) {
+            sendMessage(player, config.get().filters.bannedWords.getDenyMessage());
+            return false;
+          }
+        }
       }
     }
 
