@@ -2,6 +2,7 @@ package com.nookure.chat.paper.listeners;
 
 import com.google.inject.Inject;
 import com.nookure.chat.api.Logger;
+import com.nookure.chat.api.TextUtils;
 import com.nookure.chat.api.adapters.PermissionAdapter;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
@@ -45,6 +46,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     }
 
     joinMessage = replaceJoinMessage(
+        player,
         joinMessage,
         player.getName(),
         MiniMessage.miniMessage().serialize(player.displayName()),
@@ -53,6 +55,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     );
 
     quitMessage = replaceJoinMessage(
+        player,
         quitMessage,
         player.getName(),
         MiniMessage.miniMessage().serialize(player.displayName()),
@@ -61,6 +64,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     );
 
     joinTitleMessage = replaceJoinMessage(
+        player,
         joinTitleMessage,
         player.getName(),
         MiniMessage.miniMessage().serialize(player.displayName()),
@@ -69,6 +73,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     );
 
     joinSubtitleMessage = replaceJoinMessage(
+        player,
         joinSubtitleMessage,
         player.getName(),
         MiniMessage.miniMessage().serialize(player.displayName()),
@@ -77,6 +82,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
     );
 
     firstJoinMessage = replaceJoinMessage(
+        player,
         firstJoinMessage,
         player.getName(),
         MiniMessage.miniMessage().serialize(player.displayName()),
@@ -98,6 +104,7 @@ public abstract class CommonPlayerJoinLeaveEvent {
   }
 
   public String replaceJoinMessage(
+      @NotNull Player player,
       @NotNull String message,
       @NotNull final String name,
       @NotNull final String displayName,
@@ -109,6 +116,6 @@ public abstract class CommonPlayerJoinLeaveEvent {
     message = message.replace("{prefix}", prefix);
     message = message.replace("{suffix}", suffix);
 
-    return message;
+    return TextUtils.processPlaceholders(player, message);
   }
 }

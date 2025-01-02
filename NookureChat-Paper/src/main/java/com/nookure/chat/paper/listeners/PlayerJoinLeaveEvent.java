@@ -8,6 +8,7 @@ import com.nookure.chat.api.config.FormatConfig;
 import com.nookure.chat.api.config.JoinMotdConfig;
 import com.nookure.chat.paper.NookureChat;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
   public void onPlayerJoin(PlayerJoinEvent event) {
     CommonPlayerJoinLeaveEvent.Response format = format(event.getPlayer());
 
-    if (!event.getPlayer().hasPlayedBefore()) {
+    if (!event.getPlayer().hasPlayedBefore() && !PlainTextComponentSerializer.plainText().serialize(format.fistJoinMessage()).isEmpty()) {
       event.joinMessage(format.fistJoinMessage());
     } else {
       event.joinMessage(format.joinMessage());
