@@ -21,7 +21,7 @@ public class MuteChatCMD extends Command {
       @NotNull final ConfigurationContainer<Config> config
   ) {
     super("mutechat");
-    setPermission("nookurechat.command.mutechat");
+    setPermission("nookurechat.mutechat");
     setDescription("Mute the chat.");
 
     this.muteChatActive = muteChatActive;
