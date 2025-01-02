@@ -31,7 +31,7 @@ public class PaperChatDecorateEvent extends CommonChatEvent implements Listener 
 
     event.setCancelled(true);
 
-    if (muteChatActive.get()) {
+    if (muteChatActive.get() && !event.getPlayer().hasPermission("nookurechat.bypass.mutechat")) {
       TextUtils.sendMessage(event.getPlayer(), config.get().messages.youCantTalk);
       return;
     }
