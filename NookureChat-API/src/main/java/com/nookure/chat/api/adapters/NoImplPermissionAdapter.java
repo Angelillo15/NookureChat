@@ -7,9 +7,4 @@ public class NoImplPermissionAdapter extends PermissionAdapter {
   public String getHighestGroup(Player player) {
     return "default";
   }
-
-  @Override
-  public String[] getGroups(Player player) {
-    return new String[]{"default"};
-  }
 }

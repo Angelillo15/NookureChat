@@ -15,11 +15,6 @@ public class VaultPermissionAdapter extends PermissionAdapter {
     return permission.getPrimaryGroup(player);
   }
 
-  @Override
-  public String[] getGroups(Player player) {
-    return permission.getPlayerGroups(player);
-  }
-
   private Permission setupPermissions() {
     RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
     return rsp != null ? rsp.getProvider() : null;

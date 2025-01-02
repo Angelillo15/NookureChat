@@ -1,6 +1,7 @@
 package com.nookure.chat.paper.listeners;
 
 import com.google.inject.Inject;
+import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.TextUtils;
 import com.nookure.chat.api.config.ConfigurationContainer;
 import com.nookure.chat.api.config.FormatConfig;
@@ -10,6 +11,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -22,6 +24,8 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
   private ConfigurationContainer<FormatConfig> formatConfig;
   @Inject
   private ConfigurationContainer<JoinMotdConfig> joinMotdConfig;
+  @Inject
+  private Logger logger;
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent event) {
@@ -29,10 +33,9 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
 
     if (!event.getPlayer().hasPlayedBefore()) {
       event.joinMessage(format.fistJoinMessage());
-      return;
+    } else {
+      event.joinMessage(format.joinMessage());
     }
-
-    event.joinMessage(format.joinMessage());
 
     if (formatConfig.get().isEnableJoinTitles()) {
       Player player = event.getPlayer();
@@ -42,12 +45,15 @@ public class PlayerJoinLeaveEvent extends CommonPlayerJoinLeaveEvent implements 
           format.subtitleJoinMessage()
       );
 
+      logger.debug("Sending title to %s: %s", player.getName(), title);
       player.showTitle(title);
     }
 
     if (joinMotdConfig.get().isEnabled()) {
       sendMessage(event.getPlayer(), TextUtils.processPlaceholders(event.getPlayer(), joinMotdConfig.get().getMotd()));
     }
+
+    logger.debug("Player %s joined the server with join message %s", event.getPlayer().getName(), format.joinMessage());
   }
 
   @EventHandler

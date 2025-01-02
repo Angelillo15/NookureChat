@@ -4,6 +4,4 @@ import org.bukkit.entity.Player;
 
 public abstract class PermissionAdapter {
   abstract public String getHighestGroup(Player player);
-
-  abstract public String[] getGroups(Player player);
 }

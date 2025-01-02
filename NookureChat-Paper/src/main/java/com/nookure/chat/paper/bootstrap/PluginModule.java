@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.nookure.chat.api.Logger;
 import com.nookure.chat.api.NookureChat;
+import com.nookure.chat.api.adapters.LuckPermsPermissionAdaptar;
 import com.nookure.chat.api.adapters.NoImplPermissionAdapter;
 import com.nookure.chat.api.adapters.PermissionAdapter;
 import com.nookure.chat.api.adapters.VaultPermissionAdapter;
@@ -63,10 +64,15 @@ public class PluginModule extends AbstractModule {
 
   public PermissionAdapter getPermissionAdapter() {
     try {
-      Class.forName("net.milkbowl.vault.permission.Permission");
-      return new VaultPermissionAdapter();
+      Class.forName("net.luckperms.api.LuckPerms");
+      return new LuckPermsPermissionAdaptar();
     } catch (ClassNotFoundException e) {
-      return new NoImplPermissionAdapter();
+      try {
+        Class.forName("net.milkbowl.vault.permission.Permission");
+        return new VaultPermissionAdapter();
+      } catch (ClassNotFoundException ignored) {
+        return new NoImplPermissionAdapter();
+      }
     }
   }
 

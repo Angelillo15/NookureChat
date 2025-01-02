@@ -11,6 +11,7 @@ dependencies {
   compileOnly(libs.configurateYaml)
   compileOnly(libs.vault)
   compileOnly(libs.placeholderApi)
+  compileOnly(libs.lucko.luckperms)
 
   testImplementation(platform("org.junit:junit-bom:5.9.1"))
   testImplementation("org.junit.jupiter:junit-jupiter")

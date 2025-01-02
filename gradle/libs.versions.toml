@@ -7,6 +7,7 @@ adventurePlatform = "4.3.2"
 vault = "1.7.1"
 placeholderApi = "2.11.5"
 bstats = "3.0.2"
+luckperms = "5.4"
 
 [libraries]
 miniMessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
@@ -21,6 +22,7 @@ paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "pape
 vault = { group = "com.github.MilkBowl", name = "VaultAPI", version.ref = "vault" }
 placeholderApi = { group = "me.clip", name = "placeholderapi", version.ref = "placeholderApi" }
 bstatsBukkit = { group = "org.bstats", name = "bstats-bukkit", version.ref = "bstats" }
+lucko-luckperms = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
 
 [bundles]
 adventure = [ "adventureApi", "adventureBukkit", "adventureLegacy", "adventureAnsi", "adventurePlaintext", "miniMessage" ]

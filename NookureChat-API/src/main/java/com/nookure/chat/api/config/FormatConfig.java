@@ -125,5 +125,18 @@ public class FormatConfig {
     public String getSubtitleJoinMessage() {
       return subtitleJoinMessage;
     }
+
+    @Override
+    public String toString() {
+      return "Group{" +
+          "prefix='" + prefix + '\'' +
+          ", suffix='" + suffix + '\'' +
+          ", format='" + format + '\'' +
+          ", joinMessage='" + joinMessage + '\'' +
+          ", quitMessage='" + quitMessage + '\'' +
+          ", titleJoinMessage='" + titleJoinMessage + '\'' +
+          ", subtitleJoinMessage='" + subtitleJoinMessage + '\'' +
+          '}';
+    }
   }
 }

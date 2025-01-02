@@ -30,9 +30,11 @@ public abstract class CommonPlayerJoinLeaveEvent {
     String firstJoinMessage = formatConfig.get().getFirstJoinMessage();
 
     logger.debug("User %s with group %s joined the server", player.getName(), group);
+    logger.debug("Group map: %s", formatConfig.get().getGroups());
 
     if (formatConfig.get().getGroups().containsKey(group)) {
       FormatConfig.Group groupConfig = formatConfig.get().getGroups().get(group);
+      logger.debug("User %s has group %s and group config %s", player.getName(), group, groupConfig);
 
       prefix = groupConfig.getPrefix();
       suffix = groupConfig.getSuffix();

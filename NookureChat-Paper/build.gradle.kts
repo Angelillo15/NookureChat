@@ -18,4 +18,5 @@ bukkit {
   description = "A chat plugin for Minecraft"
   website = "https://nookure.com"
   authors = listOf("Angelillo15", "Nookure Contributors")
+  softDepend = listOf("PlaceholderAPI", "LuckPerms")
 }
