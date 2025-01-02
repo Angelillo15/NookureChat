@@ -21,8 +21,7 @@ public class TextUtils {
               StandardTags.color(),
               StandardTags.decorations(),
               StandardTags.rainbow(),
-              StandardTags.gradient(),
-              StandardTags.pride()
+              StandardTags.gradient()
           )
           .build())
       .build();

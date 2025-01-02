@@ -14,7 +14,6 @@ dependencies {
   // Implements libraries
   implementation(libs.guice)
   implementation(libs.configurateYaml)
-  implementation(libs.bundles.adventure)
   implementation(libs.bstatsBukkit)
 }
 
